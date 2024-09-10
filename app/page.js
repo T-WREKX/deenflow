@@ -1,9 +1,6 @@
 'use client'
 import Image from "next/image";
-import { ColorModeScript } from '@chakra-ui/react'
-import NextDocument, { Html, Head, Main, NextScript } from 'next/document'
-import theme from './pages/theme'
-import { useState , useRef , useEffect} from "react";
+import { useState  , useEffect} from "react";
 import { useDisclosure} from '@chakra-ui/react'
 import {
   Drawer,
@@ -36,11 +33,13 @@ const [bgSound , setBgSound] = useState(false);
 const { isOpen: isFirstDraweOpen , onOpen: onFirstDrawerOpen, onClose: onFirstDrawerClose } = useDisclosure()
 const { isOpen: isSecondDraweOpen , onOpen: onSecondDrawerOpen, onClose: onSecondDrawerClose } = useDisclosure()
 const { isOpen:isModalOpen, onOpen:onModalOpen, onClose:onModalClose } = useDisclosure()
-const btnRef = useRef()
-const [time, setTime] = useState("00:00")
+const currentTime = new Date();
+const hours = currentTime.getHours().toString().padStart(2, '0');
+const minutes1 = currentTime.getMinutes().toString().padStart(2, '0');
+const [time, setTime] = useState(`${hours}:${minutes1}`)
 const [focus , setFocus] = useState(false)
 const [imageUrl , setImageUrl] = useState("https://app.flocus.com/ccb0d385a36dc1178827.jpg")
-const [rain, setRain] = useState(new Audio("/resources/test.mp3")); 
+const [rain, setRain] = useState(typeof Audio !== "undefined" && new Audio("/resources/test.mp3")); 
 const [priority1 , setPriority1] = useState("");
 const [priority2 , setPriority2] = useState("");
 const [priority3 , setPriority3] = useState("");
@@ -86,7 +85,13 @@ const [startTimer, setStart] = useState(false)
             };
   },)
   
-    window.onload = displayClock();
+   
+    // window.onload = displayClock;
+    useEffect(() => {
+      displayClock()
+    }, [])
+    
+    
     function displayClock(){
       var dateWithoutSecond = new Date().toLocaleTimeString([], {  hour: '2-digit', minute: '2-digit'});
       if(time!=dateWithoutSecond)
@@ -229,19 +234,27 @@ const [startTimer, setStart] = useState(false)
     }
 
     function start (){
-      
+      const regex = /\d+(?=:)/g;
+      // const regex1 = /:\s*(\d+)/g;
       if(pomodoro=='focus')
       {
-        setSeconds(10)
+        let minutes1 = regex.exec(focusTtme)
+        setMinutes(minutes1[0]-1)
+        // let seconds1 = regex1.exec(focusTtme)
+        setSeconds(59)
         setStart(true)
       }
       else if (pomodoro == 'short')
       {
-        setSeconds(5)
+        let minutes1 = regex.exec(short)
+        setMinutes(minutes1[0]-1)
+        setSeconds(59)
         setStart(true)
       }
       else{
-        setSeconds(5)
+        let minutes1 = regex.exec(long)
+        setMinutes(minutes1[0]-1)
+        setSeconds(59)
         setStart(true)
       }
 
@@ -274,8 +287,8 @@ const [startTimer, setStart] = useState(false)
       <div id="hero">
       {!focus?
       <div id="home" className="fade-in-image " > 
-      <div id="home-text">You nailed it, Azim. Time to unwind.</div>
-      <div id="time">{time}</div>
+      <div id="home-text" className="text-white">You nailed it, Azim. Time to unwind.</div>
+      <div id="time" className="text-white">{time}</div>
       </div>
       :
       <div id="focus" className="fade-in-image" > 
