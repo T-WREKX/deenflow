@@ -106,6 +106,16 @@ img {
     word-spacing: -2px;
     user-select: none;
   }
+  #time1{
+    font-size: 25vh; 
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.9;
+    word-spacing: -2px;
+    user-select: none;
+    padding-top: 3vh;
+  }
 }
 @media (max-width:767px) {
   #top {
@@ -147,7 +157,21 @@ img {
     display: none
   }
   #time{
-    font-size: 12vh;
+    font-size: 18vh;
+    text-align: center;
+    font-weight: 800;
+    user-select: none;
+  }
+  #time1{
+    /* font-size: 25vh; 
+    text-align: center;
+    font-weight: 800;
+    letter-spacing: -2px;
+    line-height: 0.9;
+    word-spacing: -2px;
+    user-select: none;
+    padding-top: 3vh; */
+    font-size: 18vh;
     text-align: center;
     font-weight: 800;
     user-select: none;
@@ -301,16 +325,7 @@ img {
   z-index: 2;
 }
 
-#time1{
-    font-size: 25vh; 
-    text-align: center;
-    font-weight: 800;
-    letter-spacing: -2px;
-    line-height: 0.9;
-    word-spacing: -2px;
-    user-select: none;
-    padding-top: 3vh;
-}
+
 
 .button1{
   margin-left: 3px;

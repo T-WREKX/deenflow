@@ -93,7 +93,9 @@ const [startTimer, setStart] = useState(false)
     
     
     function displayClock(){
-      var dateWithoutSecond = new Date().toLocaleTimeString([], {  hour: '2-digit', minute: '2-digit'});
+      const hours = currentTime.getHours().toString().padStart(2, '0');
+      const minutes1 = currentTime.getMinutes().toString().padStart(2, '0');
+      var dateWithoutSecond = hours+":"+minutes1
       if(time!=dateWithoutSecond)
       {
         setTime(dateWithoutSecond);
