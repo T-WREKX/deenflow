@@ -38,7 +38,7 @@ const hours = currentTime.getHours().toString().padStart(2, '0');
 const minutes1 = currentTime.getMinutes().toString().padStart(2, '0');
 const [time, setTime] = useState(`${hours}:${minutes1}`)
 const [focus , setFocus] = useState(false)
-const [imageUrl , setImageUrl] = useState("https://app.flocus.com/ccb0d385a36dc1178827.jpg")
+const [imageUrl , setImageUrl] = useState("https://app.flocus.com/resources/images/themes/87223eadf66a7c8533bd.jpg")
 const [rain, setRain] = useState(typeof Audio !== "undefined" && new Audio("/resources/test.mp3")); 
 const [priority1 , setPriority1] = useState("");
 const [priority2 , setPriority2] = useState("");
@@ -185,7 +185,7 @@ const [startTimer, setStart] = useState(false)
         await sleep(10)
 
         bg.classList.add('fade-in-image1');
-        setImageUrl("https://app.flocus.com/792e25b707a50d2d7551.jpg")
+        setImageUrl("https://app.flocus.com/resources/images/themes/965c98510eb70fec097e.jpg")
         
         time1.classList.remove('hidden');
         time1.classList.add('fade-in-image');
@@ -214,7 +214,7 @@ const [startTimer, setStart] = useState(false)
 
         bg.classList.add('fade-in-image1');
 
-        setImageUrl("https://app.flocus.com/ccb0d385a36dc1178827.jpg")
+        setImageUrl("https://app.flocus.com/resources/images/themes/87223eadf66a7c8533bd.jpg")
 
         time.classList.remove('hidden');
         time.classList.add('fade-in-image');
@@ -294,30 +294,30 @@ const [startTimer, setStart] = useState(false)
       </div>
       :
       <div id="focus" className="fade-in-image" > 
-      <button onClick={onModalOpen} id="focus-text" className="relative z-20 hidden">{priority0}</button>
+      <button onClick={onModalOpen} id="focus-text" className="relative z-20 hidden text-white">{priority0}</button>
       <div className="flex relative  justify-center">
-      <button className="button1" onClick={()=>{setPomodoro('focus'), setStart(false)}} style={{background:pomodoro=='focus'?'#7432FF':'',border:pomodoro=='focus'?'1px solid #7432FF':''}} >Focus</button>
-      <button className="button1" onClick={()=>{setPomodoro('short'), setStart(false)}}   style={{background:pomodoro=='short'?'#7432FF':'',border:pomodoro=='short'?'1px solid #7432FF':''}} >Short Break</button>
-      <button className="button1" onClick={()=>{setPomodoro('long'),  setStart(false)}}   style={{background:pomodoro=='long'?'#7432FF':'',border:pomodoro=='long'?'1px solid #7432FF':''}} >Long Break</button>
+      <button className="button1 text-white " onClick={()=>{setPomodoro('focus'), setStart(false)}} style={{background:pomodoro=='focus'?'#7432FF':'',border:pomodoro=='focus'?'1px solid #7432FF':''}} >Focus</button>
+      <button className="button1 text-white" onClick={()=>{setPomodoro('short'), setStart(false)}}   style={{background:pomodoro=='short'?'#7432FF':'',border:pomodoro=='short'?'1px solid #7432FF':''}} >Short Break</button>
+      <button className="button1 text-white" onClick={()=>{setPomodoro('long'),  setStart(false)}}   style={{background:pomodoro=='long'?'#7432FF':'',border:pomodoro=='long'?'1px solid #7432FF':''}} >Long Break</button>
       </div>
       {!startTimer?
       <>
-       {pomodoro=='focus' &&  <div id="time1" className="z-10 fade-in-image1">{focusTtme}</div>}
-       {pomodoro=='short' &&  <div id="time1" className="z-10 fade-in-image1">{short}</div>}
-       {pomodoro=='long' &&  <div id="time1" className="z-10 fade-in-image1">{long}</div>}
+       {pomodoro=='focus' &&  <div id="time1" className="z-10 fade-in-image1 text-white">{focusTtme}</div>}
+       {pomodoro=='short' &&  <div id="time1" className="z-10 fade-in-image1 text-white ">{short}</div>}
+       {pomodoro=='long' &&  <div id="time1" className="z-10 fade-in-image1 text-white">{long}</div>}
       </>
       :
       <>
-      {pomodoro=='focus' &&  <div id="time1" className="z-10 fade-in-image1">{minutes}:{seconds}</div>}
-      {pomodoro=='short' &&  <div id="time1" className="z-10 fade-in-image1">{minutes}:{seconds}</div>}
-      {pomodoro=='long' &&  <div id="time1" className="z-10 fade-in-image1">{minutes}:{seconds}</div>}
+      {pomodoro=='focus' &&  <div id="time1"  className="z-10 fade-in-image1 text-white">{minutes}:{seconds}</div>}
+      {pomodoro=='short' &&  <div id="time1" className="z-10 fade-in-image1 text-white">{minutes}:{seconds}</div>}
+      {pomodoro=='long' &&  <div id="time1" className="z-10 fade-in-image1 text-white">{minutes}:{seconds}</div>}
       </>
       }
       <div className="flex relative  justify-center">
       {!startTimer?
-      <button onClick={()=>start()} className=" button2 mt-10" >Start</button>
-      :
-      <button onClick={()=>stop()} className=" button2 mt-10"  >Stop</button>
+      <button onClick={()=>start()} className=" button2 mt-10 text-white" >Start</button>
+      : 
+      <button onClick={()=>stop()} className=" button2 mt-10 text-white"  >Stop</button>
         }
       </div>
      
