@@ -1,5 +1,7 @@
 'use client'
 import Image from "next/image";
+import image1 from '../public/resources/images/1.png'
+import image2 from '../public/resources/images/2.png'
 import { useState  , useEffect} from "react";
 import { useDisclosure} from '@chakra-ui/react'
 import {
@@ -38,7 +40,7 @@ const hours = currentTime.getHours().toString().padStart(2, '0');
 const minutes1 = currentTime.getMinutes().toString().padStart(2, '0');
 const [time, setTime] = useState(`${hours}:${minutes1}`)
 const [focus , setFocus] = useState(false)
-const [imageUrl , setImageUrl] = useState("https://app.flocus.com/resources/images/themes/87223eadf66a7c8533bd.jpg")
+const [imageUrl , setImageUrl] = useState("resources/images/1.png")
 const [rain, setRain] = useState(typeof Audio !== "undefined" && new Audio("/resources/test.mp3")); 
 const [priority1 , setPriority1] = useState("");
 const [priority2 , setPriority2] = useState("");
@@ -185,7 +187,7 @@ const [startTimer, setStart] = useState(false)
         await sleep(10)
 
         bg.classList.add('fade-in-image1');
-        setImageUrl("https://app.flocus.com/resources/images/themes/965c98510eb70fec097e.jpg")
+        setImageUrl("resources/images/2.png")
         
         time1.classList.remove('hidden');
         time1.classList.add('fade-in-image');
@@ -214,7 +216,7 @@ const [startTimer, setStart] = useState(false)
 
         bg.classList.add('fade-in-image1');
 
-        setImageUrl("https://app.flocus.com/resources/images/themes/87223eadf66a7c8533bd.jpg")
+        setImageUrl("/resources/images/1.png")
 
         time.classList.remove('hidden');
         time.classList.add('fade-in-image');
@@ -271,8 +273,10 @@ const [startTimer, setStart] = useState(false)
   return (
     <>
     <div id="bg"  
-    style={{'--image-url': `url(${imageUrl})`}} 
-    className='bg-[image:var(--image-url)]'>
+    // style={{'--image-url': `url(${imageUrl})`}} 
+    // className='bg-[image:var(--image-url)]'
+    style={{ backgroundImage: `url('${imageUrl}')`}}
+    >
       <div id="top">
         <div id="top-left" >
         <Image
