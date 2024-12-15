@@ -562,12 +562,12 @@ const sounds = {
               <div>
               <Text fontSize='md'  as='b'>Sounds</Text>
               <HStack ml={5} w={'full'} overflow='auto' whiteSpace={'nowrap'}  scrollbar="hidden" mt={2} spacing='24px'>
-                  <Button className="theme" style={{border:bgSound=='rain'?'2px solid #7432FF':''}}  onClick={()=>setBgSound("rain")}  height={20} width={20}>
+                  <Button className="theme" style={{border:bgSound=='rain'?'2px solid #7432FF':''}}  onClick={()=>{ if(bgSoundOn){togglBgSound();}setBgSound("rain")}}  height={20} width={20}>
                     <div style={{width:40 , opacity:bgSound=='rain'?1:0.5}}>
                     🌧️   
                     </div>
                   </Button>
-                  <Button className="theme" style={{border:bgSound=='ocean'?'2px solid #7432FF':''}}   onClick={()=>setBgSound("ocean")}  height={20} width={20}>
+                  <Button className="theme" style={{border:bgSound=='ocean'?'2px solid #7432FF':''}}   onClick={()=>{if(bgSoundOn){togglBgSound();}setBgSound("ocean")}}  height={20} width={20}>
                   <div style={{width:35 , opacity:bgSound=='ocean'?1:0.5}}>
                     🌊     
                     </div>
