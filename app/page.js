@@ -390,7 +390,7 @@ const sounds = {
       <div id="hero">
       {!focus?
       <div id="home" className="fade-in-image " > 
-      <div id="home-text" className="text-white">You nailed it, Shifu. Time to unwind.</div>
+      <div id="home-text" className="text-white">You nailed it, Azim. Time to unwind.</div>
       <div id="time" className="text-white">{time}</div>
       </div>
       :
