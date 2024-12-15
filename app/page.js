@@ -400,9 +400,9 @@ const sounds = {
       </div>
       
       <div className="flex relative  justify-center">
-      <button className="btn" onClick={()=>{setPomodoro('focus'), setStart(false)}} style={{background:pomodoro=='focus'?'#7432FF':'',border:pomodoro=='focus'?'3px solid #7432FF':''}} ><p>Focus</p></button>
-      <button className="btn" onClick={()=>{setPomodoro('short'), setStart(false)}}   style={{background:pomodoro=='short'?'#7432FF':'',border:pomodoro=='short'?'3px solid #7432FF':''}} >Short Break</button>
-      <button className="btn" onClick={()=>{setPomodoro('long'),  setStart(false)}}   style={{background:pomodoro=='long'?'#7432FF':'',border:pomodoro=='long'?'3px solid #7432FF':''}} >Long Break</button>
+      <button className="btn" onClick={()=>{setPomodoro('focus'), setStart(false)}} style={{background:pomodoro=='focus'?'#7432FF':'',border:pomodoro=='focus'?'3px solid #7432FF':''}} ><p><Text id="text" >Focus</Text></p></button>
+      <button className="btn" onClick={()=>{setPomodoro('short'), setStart(false)}}   style={{background:pomodoro=='short'?'#7432FF':'',border:pomodoro=='short'?'3px solid #7432FF':''}} ><Text id="text" >Short Break</Text></button>
+      <button className="btn" onClick={()=>{setPomodoro('long'),  setStart(false)}}   style={{background:pomodoro=='long'?'#7432FF':'',border:pomodoro=='long'?'3px solid #7432FF':''}} ><Text id="text">Long Break</Text></button>
       </div>
       {!startTimer?
       <>

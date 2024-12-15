@@ -481,5 +481,9 @@ img {
   border-color: #5205f8;
 }
 
+#text{
+  text-shadow: 1px 0px 2px #000000;
+ 
+}
 
 
