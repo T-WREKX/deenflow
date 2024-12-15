@@ -1,10 +1,13 @@
 'use client'
 import Image from "next/image";
-import { useState  , useEffect} from "react";
+
 import {
   HStack,
   Card, CardHeader, CardBody, CardFooter,
   useDisclosure,
+  InputGroup,
+  InputRightElement,
+  InputRightAddon,
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -31,18 +34,22 @@ import {
   Text,
   BoxProps,
   FlexProps,
-  Flex 
+  Flex ,
+  InputAddon,
+  Group
 } from '@chakra-ui/react'
 import $ from "jquery";
 import image1 from "/public/resources/images/1.png";
 import image2 from "/public/resources/images/2.png";
 import { IconType } from 'react-icons'
-import { ReactText } from 'react'
+import { ReactText, useState, useEffect } from 'react'
+import { color } from "framer-motion";
 
 
 
 export default function Home() {
-const [bgSound , setBgSound] = useState(false);
+const [bgSoundOn , setBgSoundOn] = useState(false);
+const [bgSound , setBgSound] = useState('rain')
 const { isOpen: isFirstDraweOpen , onOpen: onFirstDrawerOpen, onClose: onFirstDrawerClose } = useDisclosure()
 const { isOpen: isSecondDraweOpen , onOpen: onSecondDrawerOpen, onClose: onSecondDrawerClose } = useDisclosure()
 const { isOpen:isModalOpen, onOpen:onModalOpen, onClose:onModalClose } = useDisclosure()
@@ -52,55 +59,91 @@ const minutes1 = currentTime.getMinutes().toString().padStart(2, '0');
 const [time, setTime] = useState(`${hours}:${minutes1}`)
 const [focus , setFocus] = useState(false)
 const [imageUrl , setImageUrl] = useState("resources/images/1.png")
-const [rain, setRain] = useState(typeof Audio !== "undefined" && new Audio("/resources/test.mp3")); 
+const [rain, setRain] = useState(typeof Audio !== "undefined" && new Audio("/resources/rain.mp3")); 
+const [ocean, setOcean] = useState(typeof Audio !== "undefined" && new Audio("/resources/ocean.mp3")); 
 const [priority1 , setPriority1] = useState("");
 const [priority2 , setPriority2] = useState("");
 const [priority3 , setPriority3] = useState("");
 const [priority1C , setPriority1C] = useState(false);
 const [priority2C , setPriority2C] = useState(false);
 const [priority3C , setPriority3C] = useState(false);
-const [priority0 , setPriority0] = useState("What do you want to focus on?");
+const [priority0 , setPriority0] = useState("What do you want to focus on? ✎");
 const [pomodoro , setPomodoro] = useState('focus')
-const [focusTtme , setFocusTime] = useState('25:00')
+const [ focusMinutes, setFocusMinutes ] =  useState(25);
+const [focusTime , setFocusTime] = useState(focusMinutes+':00')
+const [ shortMinutes, setShortMinutes ] =  useState(10);
 const [short, setShort] = useState("10:00")
+const [ longMinutes, setLongMinutes ] =  useState(20);
 const [long , setLong] = useState("20:00")
 const [ minutes, setMinutes ] =  useState(0);
 const [ seconds, setSeconds ] =  useState(0);
 const [startTimer, setStart] = useState(false)
 const [homeImage, setHomeImage] = useState('1');
 const [focusImage, setFocusImage] = useState('2');
+const sounds = {
+  rain: {
+    img: '🌧️',
+    src: function () {
+      rain.src= rain.src;
+    },
+    loop: function () {
+      rain.loop = true;
+    },
+    play: function () {
+      rain.play();
+    },
+    pause: function () {
+      rain.pause();
+    }
+  },
+  ocean: {
+    img: '🌊',
+    src: function () {
+      ocean.src= ocean.src;
+    },
+    loop: function () {
+      ocean.loop = true;
+    },
+    play: function () {
+      ocean.play();
+    },
+    pause: function () {
+      ocean.pause();
+    }
+  },
+};
 
-  useEffect(() => {
-    let myInterval = setInterval(() => {
-            if (seconds > 0) {
-                setSeconds(seconds - 1);
+    useEffect(() => {
+      let myInterval = setInterval(() => {
+              if (seconds > 0) {
+                  setSeconds(seconds - 1);
 
-            }
-            if (seconds === 0) {
-                if (minutes === 0 ) {
-                    clearInterval(myInterval)
-                    if(pomodoro=='focus' && startTimer)
-                    {
-                    setPomodoro('short')
-                    setSeconds(5)
-                    }
-                    else if (pomodoro=='short' && startTimer)
-                    {
-                      setPomodoro('focus')
-                      setSeconds(10)
-                    }
+              }
+              if (seconds === 0) {
+                  if (minutes === 0 ) {
+                      clearInterval(myInterval)
+                      if(pomodoro=='focus' && startTimer)
+                      {
+                      setPomodoro('short')
+                      setSeconds(5)
+                      }
+                      else if (pomodoro=='short' && startTimer)
+                      {
+                        setPomodoro('focus')
+                        setSeconds(10)
+                      }
 
-                } else {
-                    setMinutes(minutes - 1);
-                    setSeconds(59);
-                }
-            } 
-        }, 1000)
-        return ()=> {
-            clearInterval(myInterval);
-            };
-  },)
-  
+                  } else {
+                      setMinutes(minutes - 1);
+                      setSeconds(59);
+                  }
+              } 
+          }, 1000)
+          return ()=> {
+              clearInterval(myInterval);
+              };
+    },)
+    
    
     // window.onload = displayClock;
     useEffect(() => {
@@ -111,6 +154,34 @@ const [focusImage, setFocusImage] = useState('2');
      
     }, [homeImage, focusImage])
 
+    const switchTheme = async(no,theme)  => 
+    {
+      if(theme=="focus")
+      {
+        setFocusImage(no)
+        if (focus) 
+        {
+          bg.classList.remove('fade-in-image1');
+          await sleep(10)
+          bg.classList.add('fade-in-image1');
+          setImageUrl("resources/images/"+no+".png")
+        }
+      }
+      else
+      {
+        setHomeImage(no)
+        if (!focus) 
+        {
+        bg.classList.remove('fade-in-image1');
+        await sleep(10)
+        bg.classList.add('fade-in-image1');
+        setImageUrl("resources/images/"+no+".png")
+        }
+         
+      }
+
+    }    
+    
     
     
     function displayClock(){
@@ -166,19 +237,26 @@ const [focusImage, setFocusImage] = useState('2');
         }
         return false;
     }
+   
 
     function togglBgSound(){
-      if (bgSound)
+      if (bgSoundOn)
       {
-        setBgSound(false);
-        rain.pause();
-        rain.src =rain.src
+        
+         
+        setBgSoundOn(false);
+        sounds[bgSound].pause()
+        sounds[bgSound].src()
+          // rain.pause();
+          // rain.src = rain.src
+       
+        
       }
       else
       {
-        setBgSound(true)
-        rain.loop = true;
-        rain.play();
+        setBgSoundOn(true)
+        sounds[bgSound].loop()
+        sounds[bgSound].play()
       }
     }
 
@@ -247,7 +325,7 @@ const [focusImage, setFocusImage] = useState('2');
     }
 
     function reset (){
-      setPriority0("What do you want to focus on?");
+      setPriority0("What do you want to focus on? ✎");
       setPriority1("")
       setPriority2("")
       setPriority3("")
@@ -261,9 +339,9 @@ const [focusImage, setFocusImage] = useState('2');
       // const regex1 = /:\s*(\d+)/g;
       if(pomodoro=='focus')
       {
-        let minutes1 = regex.exec(focusTtme)
+        let minutes1 = regex.exec(focusTime)
         setMinutes(minutes1[0]-1)
-        // let seconds1 = regex1.exec(focusTtme)
+        // let seconds1 = regex1.exec(focusTime)
         setSeconds(59)
         setStart(true)
       }
@@ -312,7 +390,7 @@ const [focusImage, setFocusImage] = useState('2');
       <div id="hero">
       {!focus?
       <div id="home" className="fade-in-image " > 
-      <div id="home-text" className="text-white">You nailed it, Azim. Time to unwind.</div>
+      <div id="home-text" className="text-white">You nailed it, Shifu. Time to unwind.</div>
       <div id="time" className="text-white">{time}</div>
       </div>
       :
@@ -328,7 +406,7 @@ const [focusImage, setFocusImage] = useState('2');
       </div>
       {!startTimer?
       <>
-       {pomodoro=='focus' &&  <div  id="time1" className="z-10 fade-in-image1 text-white ">{focusTtme}</div>}
+       {pomodoro=='focus' &&  <div  id="time1" className="z-10 fade-in-image1 text-white ">{focusTime}</div>}
        {pomodoro=='short' &&  <div id="time1" className="z-10 fade-in-image1 text-white ">{short}</div>}
        {pomodoro=='long' &&  <div id="time1" className="z-10 fade-in-image1 text-white">{long}</div>}
       </>
@@ -354,10 +432,8 @@ const [focusImage, setFocusImage] = useState('2');
       </div>
       <div id="bottom">
         <div id="bottom-left" className="flex" >
-        <button className="button" onClick={onFirstDrawerOpen}>
-        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="35" height="20" viewBox="0 0 24 24" color="#ffff">
-          <path fill="#ffff" d="M 13 3 C 11.895 3 11 3.895 11 5 L 11 8 L 11 14.541016 A 4 4 0 0 0 9 14 A 4 4 0 0 0 5 18 A 4 4 0 0 0 9 22 A 4 4 0 0 0 13 18 L 13 8 L 16.5 8 C 17.881 8 19 6.881 19 5.5 C 19 4.119 17.881 3 16.5 3 L 13 3 z"></path>
-        </svg>
+        <button className="button"  onClick={onFirstDrawerOpen}>
+        🕮
         </button>
         </div>
         <div id="bottom-right" className="flex">
@@ -386,8 +462,8 @@ const [focusImage, setFocusImage] = useState('2');
         </svg>
         </button>
         <button className="button" onClick={()=>togglBgSound()}>
-          <div style={{width:35 , opacity:bgSound?1:0.5}}>
-          🌊     
+          <div style={{width:35 , opacity:bgSoundOn?1:0.5}}>
+          🔉
           </div>
         </button>
         </div>
@@ -396,11 +472,9 @@ const [focusImage, setFocusImage] = useState('2');
         <DrawerOverlay />
         <DrawerContent>
         <DrawerCloseButton />
-          <DrawerHeader borderBottomWidth='1px'>Sounds</DrawerHeader>
+          <DrawerHeader borderBottomWidth='1px'>Qur'an</DrawerHeader>
           <DrawerBody>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
+            <p>Coming Soon...</p>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
@@ -412,19 +486,19 @@ const [focusImage, setFocusImage] = useState('2');
           <DrawerBody>
           <Box >
             <Flex direction={"column"} className="left">
-          
+            <Text fontSize='md' as='b'>Themes</Text>
               <div>
-              <Text fontSize='md' as='b'>Themes</Text>
+           
                 <Box margin={5} ml={5} >
                   <Text fontSize='sm' as='b'>Home Theme</Text>
-                 <HStack  mt={5}  spacing='24px'>
-                  <Button onClick={()=>setHomeImage(1)}  height={100} width={40}>
+                 <HStack  w={'full'} overflow='auto' whiteSpace={'nowrap'}  scrollbar="hidden" mt={5} spacing='24px'>
+                  <Button className="theme" style={{border:homeImage=='1'?'2px solid #7432FF':''}}  onClick={()=>switchTheme(1,"home")}  height={100} width={40}>
                       <Image fill  src={image1} style={{
                         borderRadius: '5%',
                         border: '1px solid #fff',
                       }}/>
                   </Button>
-                  <Button onClick={()=>setHomeImage(2)}  height={100} width={40}>
+                  <Button className="theme" style={{border:homeImage=='2'?'2px solid #7432FF':''}}   onClick={()=>switchTheme(2,"home")}  height={100} width={40}>
                       <Image fill src={image2} style={{
                         borderRadius: '5%',
                         border: '1px solid #fff',
@@ -434,22 +508,16 @@ const [focusImage, setFocusImage] = useState('2');
                 </Box>
                 <Box margin={5} ml={5} >
                   <Text  fontSize='sm' as='b'>Focus Theme</Text>
-                  <HStack mt={5} spacing='24px'>
-                  <Button  onClick={()=>setFocusImage(1)}  height={100} width={40}>
-                      {homeImage == 1 ?
+                  <HStack  w={'full'} overflow='auto' whiteSpace={'nowrap'}  scrollbar="hidden" mt={5} spacing='24px'>
+                  <Button  className="theme" style={{border:focusImage=='1'?'2px solid #7432FF':''}}  onClick={()=>switchTheme(1,"focus")}  height={100} width={40}>
 
                       <Image fill src={image1} style={{
                         borderRadius: '5%',
                         border: '1px solid #fff',
                       }}/>
-                      :
-                      <Image fill src={image1} style={{
-                        borderRadius: '5%',
-                        border: '1px solid #fff',
-                      }}/>
-                      }
+                      
                   </Button>
-                  <Button  onClick={()=>setFocusImage(2)}  height={100} width={40}>
+                  <Button className="theme" style={{border:focusImage=='2'?'2px solid #7432FF':''}}  onClick={()=>switchTheme(2,"focus")}  height={100} width={40}>
                       <Image fill src={image2}  style={{
                         borderRadius: '5%',
                         border: '1px solid #fff',
@@ -460,9 +528,51 @@ const [focusImage, setFocusImage] = useState('2');
               </div>
               <div>
               <Text fontSize='md' as='b'>Timer</Text>
+              <HStack w={'full'} spacing={4} overflow='auto' whiteSpace={'nowrap'}  scrollbar="hidden" ml={5}>
+
+                <Flex direction={'column'}>
+                <Text fontSize='sm' as='b'>Focus</Text>
+                <InputGroup m={2}>
+                <Input value={focusMinutes}  width={20} type="number" onChange={(e)=>{setFocusMinutes(e.currentTarget.value); setFocusTime(`${e.currentTarget.value}:00`)}} />
+                <InputRightAddon>mins</InputRightAddon>
+                </InputGroup>     
+                
+             
+                </Flex>
+
+                <Flex direction={'column' } >
+                <Text fontSize='sm' as='b'>Short</Text>
+                <InputGroup m={2}>
+                <Input value={shortMinutes}   width={20} type="number"  onSubmit={(e)=>setShortMinutes(e.currentTarget.value)} placeholder={shortMinutes+" minutes"}  />
+                <InputRightAddon>mins</InputRightAddon>
+                </InputGroup>
+                </Flex>
+
+                <Flex direction={'column'}>
+                <Text fontSize='sm' as='b'>Long</Text>
+                <InputGroup m={2}>
+                <Input value={longMinutes}  width={20} type="number"  onSubmit={(e)=>setLongMinutes(e.currentTarget.value)} placeholder={longMinutes+" minutes"}  />
+                <InputRightAddon>mins</InputRightAddon>
+                </InputGroup>
+                </Flex>
+               
+              
+              </HStack>
               </div>
               <div>
               <Text fontSize='md'  as='b'>Sounds</Text>
+              <HStack ml={5} w={'full'} overflow='auto' whiteSpace={'nowrap'}  scrollbar="hidden" mt={2} spacing='24px'>
+                  <Button className="theme" style={{border:bgSound=='rain'?'2px solid #7432FF':''}}  onClick={()=>setBgSound("rain")}  height={20} width={20}>
+                    <div style={{width:40 , opacity:bgSound=='rain'?1:0.5}}>
+                    🌧️   
+                    </div>
+                  </Button>
+                  <Button className="theme" style={{border:bgSound=='ocean'?'2px solid #7432FF':''}}   onClick={()=>setBgSound("ocean")}  height={20} width={20}>
+                  <div style={{width:35 , opacity:bgSound=='ocean'?1:0.5}}>
+                    🌊     
+                    </div>
+                  </Button>
+                  </HStack>
               </div>
             </Flex>
           </Box>

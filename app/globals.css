@@ -361,7 +361,8 @@ img {
   width:35px;
   cursor:pointer;
   border-radius: 8px;
-  margin:5px
+  margin:5px;
+  color:white;
 }
 
 .button:hover {
@@ -459,6 +460,24 @@ img {
 
 .button2:hover{
   background-color: #5205f8;
+  border-color: #5205f8;
+}
+
+.theme {
+  background-color:'';
+  color: #FFF;
+  transition: all 0.4s;
+  position: relative;
+  backdrop-filter: blur(1px);
+  border-radius: 35px;
+  font-size: 20px;
+  font-weight: bolder;
+  border-bottom: 3px solid #FFF;
+  border: 2px solid #FFF  ;
+}
+.theme:focus,
+.theme:active,
+.theme:hover{
   border-color: #5205f8;
 }
 
