@@ -1,10 +1,10 @@
 'use client'
 import Image from "next/image";
-import image1 from '../public/resources/images/1.png'
-import image2 from '../public/resources/images/2.png'
 import { useState  , useEffect} from "react";
-import { useDisclosure} from '@chakra-ui/react'
 import {
+  HStack,
+  Card, CardHeader, CardBody, CardFooter,
+  useDisclosure,
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -12,8 +12,6 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-} from '@chakra-ui/react'
-import {
   Modal,
   ModalOverlay,
   ModalContent,
@@ -25,9 +23,22 @@ import {
   Input,
   Stack,
   Checkbox,
+  IconButton,
+  Box,
+  CloseButton,
+  Icon,
+  useColorModeValue,
+  Text,
+  BoxProps,
+  FlexProps,
+  Flex 
 } from '@chakra-ui/react'
 import $ from "jquery";
-import { Flex } from "@chakra-ui/react";
+import image1 from "/public/resources/images/1.png";
+import image2 from "/public/resources/images/2.png";
+import { IconType } from 'react-icons'
+import { ReactText } from 'react'
+
 
 
 export default function Home() {
@@ -56,11 +67,14 @@ const [long , setLong] = useState("20:00")
 const [ minutes, setMinutes ] =  useState(0);
 const [ seconds, setSeconds ] =  useState(0);
 const [startTimer, setStart] = useState(false)
+const [homeImage, setHomeImage] = useState('1');
+const [focusImage, setFocusImage] = useState('2');
 
   useEffect(() => {
     let myInterval = setInterval(() => {
             if (seconds > 0) {
                 setSeconds(seconds - 1);
+
             }
             if (seconds === 0) {
                 if (minutes === 0 ) {
@@ -92,6 +106,11 @@ const [startTimer, setStart] = useState(false)
     useEffect(() => {
       displayClock()
     }, [])
+
+    useEffect(() => {
+     
+    }, [homeImage, focusImage])
+
     
     
     function displayClock(){
@@ -168,7 +187,7 @@ const [startTimer, setStart] = useState(false)
     }
 
     const togglMode= async()=>{
-      setImageUrl("")
+   
       let bg = document.getElementById("bg");
       if ($(':checkbox').is(':checked')){
         let time = document.getElementById("time");
@@ -187,7 +206,7 @@ const [startTimer, setStart] = useState(false)
         await sleep(10)
 
         bg.classList.add('fade-in-image1');
-        setImageUrl("resources/images/2.png")
+        setImageUrl("resources/images/"+focusImage+".png")
         
         time1.classList.remove('hidden');
         time1.classList.add('fade-in-image');
@@ -216,7 +235,7 @@ const [startTimer, setStart] = useState(false)
 
         bg.classList.add('fade-in-image1');
 
-        setImageUrl("/resources/images/1.png")
+        setImageUrl("resources/images/"+homeImage+".png")
 
         time.classList.remove('hidden');
         time.classList.add('fade-in-image');
@@ -298,30 +317,34 @@ const [startTimer, setStart] = useState(false)
       </div>
       :
       <div id="focus" className="fade-in-image" > 
-      <button onClick={onModalOpen} id="focus-text" className="relative z-20 hidden text-white">{priority0}</button>
+       <div className="flex relative  justify-center">
+      <button onClick={onModalOpen} id="focus-text" className=" z-20  text-white">{priority0}</button>
+      </div>
+      
       <div className="flex relative  justify-center">
-      <button className="button1 text-white " onClick={()=>{setPomodoro('focus'), setStart(false)}} style={{background:pomodoro=='focus'?'#7432FF':'',border:pomodoro=='focus'?'1px solid #7432FF':''}} >Focus</button>
-      <button className="button1 text-white" onClick={()=>{setPomodoro('short'), setStart(false)}}   style={{background:pomodoro=='short'?'#7432FF':'',border:pomodoro=='short'?'1px solid #7432FF':''}} >Short Break</button>
-      <button className="button1 text-white" onClick={()=>{setPomodoro('long'),  setStart(false)}}   style={{background:pomodoro=='long'?'#7432FF':'',border:pomodoro=='long'?'1px solid #7432FF':''}} >Long Break</button>
+      <button className="btn" onClick={()=>{setPomodoro('focus'), setStart(false)}} style={{background:pomodoro=='focus'?'#7432FF':'',border:pomodoro=='focus'?'3px solid #7432FF':''}} ><p>Focus</p></button>
+      <button className="btn" onClick={()=>{setPomodoro('short'), setStart(false)}}   style={{background:pomodoro=='short'?'#7432FF':'',border:pomodoro=='short'?'3px solid #7432FF':''}} >Short Break</button>
+      <button className="btn" onClick={()=>{setPomodoro('long'),  setStart(false)}}   style={{background:pomodoro=='long'?'#7432FF':'',border:pomodoro=='long'?'3px solid #7432FF':''}} >Long Break</button>
       </div>
       {!startTimer?
       <>
-       {pomodoro=='focus' &&  <div id="time1" className="z-10 fade-in-image1 text-white">{focusTtme}</div>}
+       {pomodoro=='focus' &&  <div  id="time1" className="z-10 fade-in-image1 text-white ">{focusTtme}</div>}
        {pomodoro=='short' &&  <div id="time1" className="z-10 fade-in-image1 text-white ">{short}</div>}
        {pomodoro=='long' &&  <div id="time1" className="z-10 fade-in-image1 text-white">{long}</div>}
       </>
       :
       <>
-      {pomodoro=='focus' &&  <div id="time1"  className="z-10 fade-in-image1 text-white">{minutes}:{seconds}</div>}
-      {pomodoro=='short' &&  <div id="time1" className="z-10 fade-in-image1 text-white">{minutes}:{seconds}</div>}
-      {pomodoro=='long' &&  <div id="time1" className="z-10 fade-in-image1 text-white">{minutes}:{seconds}</div>}
+
+      {pomodoro=='focus' &&  <div id="time1"  className="z-10 fade-in-image1 text-white">{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</div>}
+      {pomodoro=='short' &&  <div id="time1" className="z-10 fade-in-image1 text-white">{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</div>}
+      {pomodoro=='long' &&  <div id="time1" className="z-10 fade-in-image1 text-white">{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</div>}
       </>
       }
-      <div className="flex relative  justify-center">
+      <div className="flex  relative  justify-center">
       {!startTimer?
-      <button onClick={()=>start()} className=" button2 mt-10 text-white" >Start</button>
+      <button onClick={()=>start()} className=" button2  text-white" >Start</button>
       : 
-      <button onClick={()=>stop()} className=" button2 mt-10 text-white"  >Stop</button>
+      <button onClick={()=>stop()} className=" button2  text-white"  >Stop</button>
         }
       </div>
      
@@ -373,7 +396,7 @@ const [startTimer, setStart] = useState(false)
         <DrawerOverlay />
         <DrawerContent>
         <DrawerCloseButton />
-          <DrawerHeader borderBottomWidth='1px'>Basic Drawer</DrawerHeader>
+          <DrawerHeader borderBottomWidth='1px'>Sounds</DrawerHeader>
           <DrawerBody>
             <p>Some contents...</p>
             <p>Some contents...</p>
@@ -385,11 +408,64 @@ const [startTimer, setStart] = useState(false)
         <DrawerOverlay />
         <DrawerContent>
         <DrawerCloseButton />
-          <DrawerHeader borderBottomWidth='1px'>Basic Drawer</DrawerHeader>
+          <DrawerHeader></DrawerHeader>
           <DrawerBody>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
-            <p>Some contents...</p>
+          <Box >
+            <Flex direction={"column"} className="left">
+          
+              <div>
+              <Text fontSize='md' as='b'>Themes</Text>
+                <Box margin={5} ml={5} >
+                  <Text fontSize='sm' as='b'>Home Theme</Text>
+                 <HStack  mt={5}  spacing='24px'>
+                  <Button onClick={()=>setHomeImage(1)}  height={100} width={40}>
+                      <Image fill  src={image1} style={{
+                        borderRadius: '5%',
+                        border: '1px solid #fff',
+                      }}/>
+                  </Button>
+                  <Button onClick={()=>setHomeImage(2)}  height={100} width={40}>
+                      <Image fill src={image2} style={{
+                        borderRadius: '5%',
+                        border: '1px solid #fff',
+                      }}/>
+                  </Button>
+                  </HStack>
+                </Box>
+                <Box margin={5} ml={5} >
+                  <Text  fontSize='sm' as='b'>Focus Theme</Text>
+                  <HStack mt={5} spacing='24px'>
+                  <Button  onClick={()=>setFocusImage(1)}  height={100} width={40}>
+                      {homeImage == 1 ?
+
+                      <Image fill src={image1} style={{
+                        borderRadius: '5%',
+                        border: '1px solid #fff',
+                      }}/>
+                      :
+                      <Image fill src={image1} style={{
+                        borderRadius: '5%',
+                        border: '1px solid #fff',
+                      }}/>
+                      }
+                  </Button>
+                  <Button  onClick={()=>setFocusImage(2)}  height={100} width={40}>
+                      <Image fill src={image2}  style={{
+                        borderRadius: '5%',
+                        border: '1px solid #fff',
+                      }}/>
+                  </Button>
+                  </HStack>
+                </Box>
+              </div>
+              <div>
+              <Text fontSize='md' as='b'>Timer</Text>
+              </div>
+              <div>
+              <Text fontSize='md'  as='b'>Sounds</Text>
+              </div>
+            </Flex>
+          </Box>
           </DrawerBody>
         </DrawerContent>
       </Drawer>
