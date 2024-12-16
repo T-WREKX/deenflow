@@ -62,7 +62,7 @@ const App = () => {
         justifyContent="center"
         alignItems="center"
       >
-          <div id="text1" >DeenFlow</div>
+          <div style={{userSelect:'none' , color:"#000"}} id="text1" >DeenFlow</div>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form>
             <Stack
@@ -77,7 +77,7 @@ const App = () => {
                     pointerEvents="none"
                     children={<CFaMail color="gray.300" />}
                   />
-                  <Input value={inputs.email}
+                  <Input borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}} value={inputs.email}
 							   onChange={(e) => setInputs({ ...inputs, email: e.target.value })} type="email" placeholder="email address" />
                 </InputGroup>
               </FormControl>
@@ -89,6 +89,7 @@ const App = () => {
                     children={<CFaLock color="gray.300" />}
                   />
                   <Input
+                  borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}}
                   value={inputs.password}
                   autoComplete="current-password"
             onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
@@ -96,20 +97,24 @@ const App = () => {
                     placeholder="Password"
                   />
                   <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="sm" onClick={handleShowClick}>
+                    <Button backgroundColor="gray.300"
+                      color="#fff"
+                      _hover={{backgroundColor:"gray.400"}}  h="1.75rem" size="sm" onClick={handleShowClick}>
                       {showPassword ? "Hide" : "Show"}
                     </Button>
                   </InputRightElement>
                 </InputGroup>
                 <FormHelperText textAlign="right">
-                  <Link  href="/forgot-password">forgot password?</Link>
+                  <Link color='#000'  href="/forgot-password">forgot password?</Link>
                 </FormHelperText>
               </FormControl>
               <Button
                 borderRadius={0}
                 variant="solid"
                 width="full"
-                 colorScheme="gray"
+                backgroundColor="#000"
+                color="#fff"
+                _hover={{backgroundColor:"#121212"}}
                  onClick={() => login(inputs)}  isLoading={loading} 
               >
                 Login
@@ -118,8 +123,10 @@ const App = () => {
           </form>
         </Box>
       </Stack>
-      <Box>
+      <Box color='#000'>
+      <span style={{userSelect:'none' , color:"#000"}}>
         New to us?{" "}
+          </span>
         <Link color='gray' href="/register">
           Sign Up
         </Link>

@@ -88,6 +88,7 @@ const App = () => {
                     children={<CFaUserAlt color="gray.300" />}
                   />
                   <Input value={inputs.username}
+                  borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}}
 								onChange={(e) => setInputs({ ...inputs, username: e.target.value })}  type="name" placeholder="name" />
                 </InputGroup>
               </FormControl>
@@ -98,6 +99,7 @@ const App = () => {
                     children={<CFaMail color="gray.300" />}
                   />
                   <Input value={inputs.email}
+                  borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}}
 							onChange={(e) => setInputs({ ...inputs, email: e.target.value })} type="email" placeholder="email address" />
                 </InputGroup>
               </FormControl>
@@ -110,6 +112,7 @@ const App = () => {
                   />
                   <Input
                   value={inputs.password}
+                  borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}}
                   autoComplete="current-password"
             onChange={(e) => setInputs({ ...inputs, password: e.target.value })}
                     type={showPassword ? "text" : "password"}
@@ -125,7 +128,9 @@ const App = () => {
               </FormControl>
               <Button
                 borderRadius={0}
-            
+                backgroundColor="#000"
+                color="#fff"
+                _hover={{backgroundColor:"#121212"}}
                 variant="solid"
                 width="full"
                  colorScheme="gray"
@@ -139,7 +144,10 @@ const App = () => {
         </Box>
       </Stack>
       <Box>
-        Already registered?{" "}
+      <span style={{userSelect:'none' , color:"#000"}}>
+      Already registered?{" "}
+          </span>
+      
         <Link color='gray' href="/login">
           Login
         </Link>

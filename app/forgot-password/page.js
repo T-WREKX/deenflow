@@ -19,7 +19,8 @@ import {
   Avatar,
   FormControl,
   FormHelperText,
-  InputRightElement
+  InputRightElement,
+  background
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import Image from "next/image";
@@ -59,7 +60,7 @@ const App = () => {
         justifyContent="center"
         alignItems="center"
       >
-          <div id="text1" >DeenFlow</div>
+          <div style={{userSelect:'none' , color:"#000"}} id="text1" >DeenFlow</div>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form>
             <Stack
@@ -69,7 +70,7 @@ const App = () => {
               boxShadow="md"
             >
                 
-                 <div style={{userSelect:'none'}}>
+                 <div style={{userSelect:'none' , color:"#000"}}>
                 Just let us know your email address.
                 </div>
                 
@@ -80,7 +81,7 @@ const App = () => {
                     pointerEvents="none"
                     children={<CFaUserAlt color="gray.300" />}
                   />
-                  <Input type="email" placeholder="email address" value={email}
+                  <Input borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}} type="email" placeholder="email address" value={email}
 				            onChange={(e) => setEmail(e.target.value )} />
                 </InputGroup>
               </FormControl>
@@ -89,7 +90,9 @@ const App = () => {
                 borderRadius={0}
                 variant="solid"
                 width="full"
-                 colorScheme="gray"
+                 backgroundColor="#000"
+                 color="#fff"
+                 _hover={{backgroundColor:"#121212"}}
                  onClick={resetPasswordFunction}
               >
                 EMAIL PASSWORD RESET LINK
