@@ -65,7 +65,7 @@ img {
     height: 19vh;
   }
   #top-right{
-    text-shadow: 1px 0px 2px #000000;
+    /* text-shadow: 1px 0px 2px #000000; */ 
     font-size:3vh;
     line-height: 2rem; 
     font-weight:600; 
@@ -107,7 +107,7 @@ img {
     line-height: 1.8rem;
   }
   #time{
-    text-shadow: 1px 0px 2px #000000;
+    /* text-shadow: 1px 0px 2px #000000; */
     font-family: DegularFont, sans-serif;
     font-size: 22vh; 
     text-align: center;
@@ -118,7 +118,7 @@ img {
     padding-top: 3vh;
   }
   #time1{
-    text-shadow: 1px 0px 2px #000000;
+    /* text-shadow: 1px 0px 2px #000000; */
     font-family: DegularFont, sans-serif;
     font-size: 22vh; 
     text-align: center;
@@ -131,7 +131,7 @@ img {
   }
 
   #home-text{
-    text-shadow: 1px 0px 2px #000000;
+    /* text-shadow: 1px 0px 2px #000000; */
     font-family: DegularFont, sans-serif;
     height: 8vh;
     font-size: 4vh;
@@ -146,7 +146,7 @@ img {
   }
 
   #focus-text{
-    text-shadow: 1px 0px 2px #000000;
+    /* text-shadow: 1px 0px 2px #000000; */
     font-family: DegularFont, sans-serif;
     height: 8vh;
     font-size: 4vh;
@@ -202,7 +202,7 @@ img {
     padding: 20px;
   }
   #top-right{
-    text-shadow: 1px 0px 2px #000000;
+    /* text-shadow: 1px 0px 2px #000000; */
     text-align: center;
     font-size:5vw;
     line-height: 2rem; 
@@ -238,7 +238,7 @@ img {
     display: none
   }
   #time{
-    text-shadow: 1px 0px 2px #000000;
+    /* text-shadow: 1px 0px 2px #000000; */
     font-family: DegularFont, sans-serif;
     font-size: 30vw;
     text-align: center;
@@ -254,7 +254,7 @@ img {
     word-spacing: -2px;
     user-select: none;
     padding-top: 3vh; */
-    text-shadow: 1px 0px 2px #000000;
+    /* text-shadow: 1px 0px 2px #000000; */
     font-family: DegularFont, sans-serif;
     font-size: 18vw;
     text-align: center;
@@ -263,7 +263,7 @@ img {
   }
 
   #home-text{
-    text-shadow: 1px 0px 2px #000000;
+    /* text-shadow: 1px 0px 2px #000000; */
     font-family: DegularFont, sans-serif;
     height: 8vh;
     font-size: 6vw;
@@ -276,7 +276,7 @@ img {
   }
 
   #focus-text{
-    text-shadow: 1px 0px 2px #000000;
+    /* text-shadow: 1px 0px 2px #000000; */
     font-family: DegularFont, sans-serif;
     height: 8vh;
     font-size: 6vw;
@@ -330,7 +330,7 @@ img {
 }
 
 #home{
-  display: inline-block;
+ 
   position: relative;
   top: 0;
   bottom: 0;
@@ -482,8 +482,16 @@ img {
 }
 
 #text{
-  text-shadow: 1px 0px 2px #000000;
+  /* text-shadow: 1px 0px 2px #000000; */
+  font-family: DegularFont, sans-serif;
  
 }
+
+#text1{
+  /* text-shadow: 1px 0px 2px #000000; */
+  font-family: DegularFont, sans-serif;
+  font-size: 5vw;
+}
+
 
 
