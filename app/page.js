@@ -551,12 +551,12 @@ const authUser = useAuthStore((state) => state.user);
                 <Flex direction={'column'}>
                 <Text  fontSize='md' as='b'>Clock</Text>
                 <HStack ml={5} w={'full'} overflow='auto' whiteSpace={'nowrap'}  scrollbar="hidden" mt={2} spacing='24px'>
-                  <Button className="theme" style={{border:hour=='h:mm'?'2px solid #7432FF':''}}  onClick={()=>{ setHour('h:mm');}}  height={10} width={20}>
+                  <Button backgroundColor={"#fff"}  className="theme" style={{border:hour=='h:mm'?'3px solid #7432FF':''}}  onClick={()=>{ setHour('h:mm');}}  height={10} width={20}>
                     <div style={{ opacity:hour=='h:mm'?1:0.5}}>
                     12 Hour   
                     </div>
                   </Button>
-                  <Button className="theme" style={{border:hour=='HH:mm'?'2px solid #7432FF':''}}   onClick={()=>{setHour('HH:mm');}}  height={10} width={20}>
+                  <Button backgroundColor={"#fff"}  className="theme" style={{border:hour=='HH:mm'?'3px solid #7432FF':''}}   onClick={()=>{setHour('HH:mm');}}  height={10} width={20}>
                   <div style={{ opacity:hour=='HH:mm'?1:0.5}}>
                     24 Hour     
                     </div>
@@ -576,7 +576,7 @@ const authUser = useAuthStore((state) => state.user);
                 <Text  fontSize='md' as='b'>Pomodoro</Text>
                 <InputGroup m={2}>
                 <Input  value={focusMinutes} width={20} type="number" onChange={(e)=>{ if((e.currentTarget.value).replace(/^0+/,'')<240){setFocusMinutes((e.currentTarget.value).replace(/^0+/,'')); setFocusTime(`${(e.currentTarget.value).replace(/^0+/,'')}:00`)}} } />
-                <InputRightAddon  color="#000" >mins</InputRightAddon>
+                <InputRightAddon backgroundColor={"#fff"}   color="#000" >mins</InputRightAddon>
                 </InputGroup>     
                 
              
@@ -586,7 +586,7 @@ const authUser = useAuthStore((state) => state.user);
                 <Text  fontSize='md' as='b'>Short Break</Text>
                 <InputGroup m={2}>
                 <Input  value={shortMinutes}   width={20} type="number"  onChange={(e)=>{ if((e.currentTarget.value).replace(/^0+/,'')<240 ){setShortMinutes((e.currentTarget.value).replace(/^0+/,''));  setShort(`${(e.currentTarget.value).replace(/^0+/,'')}:00`)}} }/>
-                <InputRightAddon  color="#000">mins</InputRightAddon>
+                <InputRightAddon backgroundColor={"#fff"}   color="#000">mins</InputRightAddon>
                 </InputGroup>
                 </Flex>
 
@@ -594,7 +594,7 @@ const authUser = useAuthStore((state) => state.user);
                 <Text  fontSize='md' as='b'>Long Break</Text>
                 <InputGroup m={2}>
                 <Input  value={longMinutes}  width={20} type="number"  onChange={(e)=>{ if((e.currentTarget.value).replace(/^0+/,'')<240){setLongMinutes((e.currentTarget.value).replace(/^0+/,'')); setLong(`${(e.currentTarget.value).replace(/^0+/,'')}:00`)}} } />
-                <InputRightAddon  color="#000">mins</InputRightAddon>
+                <InputRightAddon backgroundColor={"#fff"}  color="#000">mins</InputRightAddon>
                 </InputGroup>
                 </Flex>
                
