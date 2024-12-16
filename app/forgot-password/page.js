@@ -81,7 +81,7 @@ const App = () => {
                     pointerEvents="none"
                     children={<CFaUserAlt color="gray.300" />}
                   />
-                  <Input borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}} type="email" placeholder="email address" value={email}
+                  <Input  color="#000" borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}} type="email" placeholder="email address" value={email}
 				            onChange={(e) => setEmail(e.target.value )} />
                 </InputGroup>
               </FormControl>

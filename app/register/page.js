@@ -87,7 +87,8 @@ const App = () => {
                     pointerEvents="none"
                     children={<CFaUserAlt color="gray.300" />}
                   />
-                  <Input value={inputs.username}
+                  <Input color="#000"
+                  value={inputs.username}
                   borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}}
 								onChange={(e) => setInputs({ ...inputs, username: e.target.value })}  type="name" placeholder="name" />
                 </InputGroup>
@@ -98,7 +99,7 @@ const App = () => {
                     pointerEvents="none"
                     children={<CFaMail color="gray.300" />}
                   />
-                  <Input value={inputs.email}
+                  <Input color="#000" value={inputs.email}
                   borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}}
 							onChange={(e) => setInputs({ ...inputs, email: e.target.value })} type="email" placeholder="email address" />
                 </InputGroup>
@@ -111,6 +112,7 @@ const App = () => {
                     children={<CFaLock color="gray.300" />}
                   />
                   <Input
+                  color="#000"
                   value={inputs.password}
                   borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}}
                   autoComplete="current-password"

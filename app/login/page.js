@@ -77,7 +77,7 @@ const App = () => {
                     pointerEvents="none"
                     children={<CFaMail color="gray.300" />}
                   />
-                  <Input borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}} value={inputs.email}
+                  <Input color="#000" borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}} value={inputs.email}
 							   onChange={(e) => setInputs({ ...inputs, email: e.target.value })} type="email" placeholder="email address" />
                 </InputGroup>
               </FormControl>
@@ -89,6 +89,7 @@ const App = () => {
                     children={<CFaLock color="gray.300" />}
                   />
                   <Input
+                  color="#000"
                   borderColor={"gray.400"}  _hover={{borderColor:"gray.600"}}
                   value={inputs.password}
                   autoComplete="current-password"
