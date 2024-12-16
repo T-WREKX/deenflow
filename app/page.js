@@ -551,15 +551,15 @@ const authUser = useAuthStore((state) => state.user);
                 <Flex direction={'column'}>
                 <Text  fontSize='md' as='b'>Clock</Text>
                 <HStack ml={5} w={'full'} overflow='auto' whiteSpace={'nowrap'}  scrollbar="hidden" mt={2} spacing='24px'>
-                  <Button backgroundColor={"#fff"}  className="theme" style={{border:hour=='h:mm'?'3px solid #7432FF':''}}  onClick={()=>{ setHour('h:mm');}}  height={10} width={20}>
-                    <div style={{ opacity:hour=='h:mm'?1:0.5}}>
+                  <Button backgroundColor={hour=='h:mm'?"white":"gray"}  _hover={{backgroundColor:hour=='h:mm'?"white":"gray"}}  className="theme" style={{border:hour=='h:mm'?'3px solid #7432FF':''}}  onClick={()=>{ setHour('h:mm');}}  height={10} width={20}>
+                    <Text color={"#000"} style={{ opacity:hour=='h:mm'?1:0.5}}>
                     12 Hour   
-                    </div>
+                    </Text>
                   </Button>
-                  <Button backgroundColor={"#fff"}  className="theme" style={{border:hour=='HH:mm'?'3px solid #7432FF':''}}   onClick={()=>{setHour('HH:mm');}}  height={10} width={20}>
-                  <div style={{ opacity:hour=='HH:mm'?1:0.5}}>
+                  <Button  backgroundColor={hour=='HH:mm'?"white":"gray"}   _hover={{backgroundColor:hour=='HH:mm'?"white":"gray"}} className="theme" style={{border:hour=='HH:mm'?'3px solid #7432FF':''}}   onClick={()=>{setHour('HH:mm');}}  height={10} width={20}>
+                  <Text color={"#000"} style={{ opacity:hour=='HH:mm'?1:0.5}}>
                     24 Hour     
-                    </div>
+                    </Text>
                   </Button>
                   </HStack>   
                 </Flex>
