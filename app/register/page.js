@@ -72,7 +72,7 @@ const App = () => {
         justifyContent="center"
         alignItems="center"
       >
-          <div id="text1" >DeenFlow</div>
+          <div style={{userSelect:'none' , color:"#000"}} id="text1" >DeenFlow</div>
         <Box minW={{ base: "90%", md: "468px" }}>
           <form>
             <Stack
