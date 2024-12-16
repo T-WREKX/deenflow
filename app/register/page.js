@@ -121,7 +121,9 @@ const App = () => {
                     placeholder="Password"
                   />
                   <InputRightElement width="4.5rem">
-                    <Button h="1.75rem" size="sm" onClick={handleShowClick}>
+                    <Button backgroundColor="gray.300"
+                      color="#fff"
+                      _hover={{backgroundColor:"gray.400"}}  h="1.75rem" size="sm" onClick={handleShowClick}>
                       {showPassword ? "Hide" : "Show"}
                     </Button>
                   </InputRightElement>
