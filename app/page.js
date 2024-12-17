@@ -65,6 +65,7 @@ const [focus , setFocus] = useState(false)
 const [imageUrl , setImageUrl] = useState("resources/images/1.png")
 const [rain, setRain] = useState(typeof Audio !== "undefined" && new Audio("/resources/rain.mp3")); 
 const [ocean, setOcean] = useState(typeof Audio !== "undefined" && new Audio("/resources/ocean.mp3")); 
+const [bell, setBell] = useState(typeof Audio !== "undefined" && new Audio("/resources/bell.mp3")); 
 const [priority1 , setPriority1] = useState("");
 const [priority2 , setPriority2] = useState("");
 const [priority3 , setPriority3] = useState("");
@@ -84,6 +85,7 @@ const [ seconds, setSeconds ] =  useState(0);
 const [startTimer, setStart] = useState(false)
 const [homeImage, setHomeImage] = useState('1');
 const [focusImage, setFocusImage] = useState('2');
+const [emoji, setEmoji] = useState('⚡ ')
 const showToast = useShowToast();
 const  { handleLogout, isLoggingOut, error }= useLogout();
 const sounds = {
@@ -125,7 +127,9 @@ const authUser = useAuthStore((state) => state.user);
     useEffect(() => {
       let myInterval = setInterval(() => {
               if (seconds > 0) {
+                  document.title = emoji+minutes+":"+(seconds-1)+" | DeenFlow";
                   setSeconds(seconds - 1);
+                  
 
               }
               if (seconds === 0) {
@@ -133,16 +137,25 @@ const authUser = useAuthStore((state) => state.user);
                       clearInterval(myInterval)
                       if(pomodoro=='focus' && startTimer)
                       {
+                      bell.play()
                       setPomodoro('short')
                       setMinutes(shortMinutes)
                       }
                       else if (pomodoro=='short' && startTimer)
                       {
+                        bell.play()
+                        setPomodoro('focus')
+                        setMinutes(focusMinutes)
+                      }
+                      else if (pomodoro=='long' && startTimer)
+                      {
+                        bell.play()
                         setPomodoro('focus')
                         setMinutes(focusMinutes)
                       }
 
                   } else {
+                      document.title = emoji+(minutes-1)+":"+59+" | DeenFlow";
                       setMinutes(minutes - 1);
                       setSeconds(59);
                   }
@@ -294,6 +307,7 @@ const authUser = useAuthStore((state) => state.user);
        // console.log("Focus")
     }
     else {
+        document.title = "DeenFlow";
         let time1 = document.getElementById("time1");
         time1.classList.add('hidden');
         let focus_text = document.getElementById("focus-text");
@@ -336,19 +350,25 @@ const authUser = useAuthStore((state) => state.user);
     function start (){
       if(pomodoro=='focus')
       {
+        document.title = emoji+focusMinutes+":00 | DeenFlow";
         setMinutes(focusMinutes-1)
         setSeconds(59)
+        document.title = emoji+(focusMinutes-1)+":59 | DeenFlow";
         setStart(true)
       }
       else if (pomodoro == 'short')
       {        
+        document.title = emoji+shortMinutes+":00 | DeenFlow";
         setMinutes(shortMinutes-1)
         setSeconds(59)
+        document.title = emoji+(shortMinutes-1)+":59 | DeenFlow";
         setStart(true)
       }
       else{
+        document.title = emoji+longMinutes+":00 | DeenFlow";
         setMinutes(longMinutes-1)
         setSeconds(59)
+        document.title = emoji+(longMinutes-1)+":59 | DeenFlow";
         setStart(true)
       }
 
@@ -358,6 +378,18 @@ const authUser = useAuthStore((state) => state.user);
       setMinutes(0)
       setSeconds(0)
       setStart(false)
+      if(pomodoro=='focus')
+        {
+          document.title = "⚡"+focusMinutes+":00 | DeenFlow";
+        }
+        else if (pomodoro == 'short')
+        {        
+          document.title = "☕"+shortMinutes+":00 | DeenFlow";
+        }
+        else{
+          document.title = "☕"+longMinutes+":00 | DeenFlow";
+        }
+
     }
 
   return (
@@ -409,9 +441,9 @@ const authUser = useAuthStore((state) => state.user);
       </div>
       
       <div style={{ userSelect: 'none' }} className="flex relative  justify-center">
-      <button className="btn" onClick={()=>{setPomodoro('focus'), setStart(false)}} style={{background:pomodoro=='focus'?'#7432FF':'',border:pomodoro=='focus'?'3px solid #7432FF':''}} ><Text id="text" >Focus</Text></button>
-      <button className="btn" onClick={()=>{setPomodoro('short'), setStart(false)}}   style={{background:pomodoro=='short'?'#7432FF':'',border:pomodoro=='short'?'3px solid #7432FF':''}} ><Text id="text" >Short Break</Text></button>
-      <button className="btn" onClick={()=>{setPomodoro('long'),  setStart(false)}}   style={{background:pomodoro=='long'?'#7432FF':'',border:pomodoro=='long'?'3px solid #7432FF':''}} ><Text id="text">Long Break</Text></button>
+      <button className="btn" onClick={()=>{setPomodoro('focus'), setStart(false), setEmoji("⚡ ") ,  document.title = "⚡ "+focusMinutes+":00 | DeenFlow"; }} style={{background:pomodoro=='focus'?'#7432FF':'',border:pomodoro=='focus'?'3px solid #7432FF':''}} ><Text id="text" >Focus</Text></button>
+      <button className="btn" onClick={()=>{setPomodoro('short'), setStart(false), setEmoji("☕ ") ,  document.title = "☕ "+shortMinutes+":00 | DeenFlow"; }}   style={{background:pomodoro=='short'?'#7432FF':'',border:pomodoro=='short'?'3px solid #7432FF':''}} ><Text id="text" >Short Break</Text></button>
+      <button className="btn" onClick={()=>{setPomodoro('long'),  setStart(false), setEmoji("☕ ") ,  document.title = "☕ "+longMinutes+":00 | DeenFlow"; }}   style={{background:pomodoro=='long'?'#7432FF':'',border:pomodoro=='long'?'3px solid #7432FF':''}} ><Text id="text">Long Break</Text></button>
       </div>
       {!startTimer?
       <>
