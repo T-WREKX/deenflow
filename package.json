@@ -28,6 +28,7 @@
     "react-icons": "^5.4.0",
     "react-live-clock": "^6.1.25",
     "react-native-device-info": "^14.0.1",
+    "sharp": "^0.33.5",
     "stripe": "^17.4.0",
     "use-sound": "^4.0.3",
     "zustand": "^5.0.2"
