@@ -43,8 +43,8 @@ const App = () => {
 		password: "",
 	});
 
-  const [signInWithGoogle, error1] = useSignInWithGoogle(auth);
-  const [signInWithApple ] = useSignInWithApple(auth);
+  const [signInWithGoogle, , , error1] = useSignInWithGoogle(auth);
+  const [signInWithApple,  , ,error2 ] = useSignInWithApple(auth);
 	const showToast = useShowToast();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -98,8 +98,8 @@ const App = () => {
   const handleAppleAuth = async () => {
 		try {
 			const newUser = await signInWithApple();
-			if (!newUser && error) {
-				showToast("Error", error.message, "error");
+			if (!newUser && error2) {
+				showToast("Error", error2.message, "error");
 				return;
 			}
 			const userRef = doc(firestore, "users", newUser.user.uid);
