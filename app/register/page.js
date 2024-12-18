@@ -15,18 +15,26 @@ import {
   Avatar,
   FormControl,
   FormHelperText,
-  InputRightElement
+  InputRightElement,
+  Image
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock , FaRegEnvelope } from "react-icons/fa";
-import Image from "next/image";
+
 import useSignUpWithEmailAndPassword from "../../hooks/useSignUpWithEmailAndPassword";
 import { auth } from "../../firebase/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from 'next/navigation'
+import { useSignInWithGoogle , useSignInWithApple } from "react-firebase-hooks/auth";
+import useShowToast from "../../hooks/useShowToast";
+import useAuthStore from "../../store/authStore";
+import {  firestore } from "../../firebase/firebase"
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const CFaMail = chakra(FaRegEnvelope);
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
+
+
 
 const App = () => {
   const [inputs, setInputs] = useState({
@@ -34,6 +42,10 @@ const App = () => {
 		email: "",
 		password: "",
 	});
+
+  const [signInWithGoogle, error1] = useSignInWithGoogle(auth);
+  const [signInWithApple ] = useSignInWithApple(auth);
+	const showToast = useShowToast();
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowClick = () => setShowPassword(!showPassword);
@@ -49,6 +61,72 @@ const App = () => {
 
   const router = useRouter();
   const [user] = useAuthState(auth);
+
+  const handleGoogleAuth = async () => {
+		try {
+			const newUser = await signInWithGoogle();
+			if (!newUser && error1) {
+				showToast("Error", error1.message, "error");
+				return;
+			}
+			const userRef = doc(firestore, "users", newUser.user.uid);
+			const userSnap = await getDoc(userRef);
+
+			if (userSnap.exists()) {
+				// login
+				const userDoc = userSnap.data();
+				localStorage.setItem("user-info", JSON.stringify(userDoc));
+				loginUser(userDoc);
+			} else {
+				// signup
+				const userDoc = {
+					uid: newUser.user.uid,
+					email: newUser.user.email,
+					username: newUser.user.email.split("@")[0],
+					createdAt: Date.now(),
+					premium:false
+				};
+				await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
+				localStorage.setItem("user-info", JSON.stringify(userDoc));
+				loginUser(userDoc);
+			}
+		} catch (error) {
+			showToast("Error", error.message, "error");
+		}
+	};
+
+  const handleAppleAuth = async () => {
+		try {
+			const newUser = await signInWithApple();
+			if (!newUser && error) {
+				showToast("Error", error.message, "error");
+				return;
+			}
+			const userRef = doc(firestore, "users", newUser.user.uid);
+			const userSnap = await getDoc(userRef);
+
+			if (userSnap.exists()) {
+				// login
+				const userDoc = userSnap.data();
+				localStorage.setItem("user-info", JSON.stringify(userDoc));
+				loginUser(userDoc);
+			} else {
+				// signup
+				const userDoc = {
+					uid: newUser.user.uid,
+					email: newUser.user.email,
+					username: newUser.user.email.split("@")[0],
+					createdAt: Date.now(),
+					premium:false
+				};
+				await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
+				localStorage.setItem("user-info", JSON.stringify(userDoc));
+				loginUser(userDoc);
+			}
+		} catch (error) {
+			showToast("Error", error.message, "error");
+		}
+	};
 
   useEffect(() => {
     user && router.push('/')
@@ -156,6 +234,20 @@ const App = () => {
           Login
         </Link>
       </Box>
+      <Flex mt={10}> 
+        <Flex alignItems={"center"} justifyContent={"center"} cursor={"pointer"} onClick={handleGoogleAuth}>
+        <Button backgroundColor={"#000"} _hover={{backgroundColor:"#121212"}} mx='2' color={"white"}>
+      <Image src='/google.png' w={3} h={3} mr={2} alt='Google logo' />
+        Google
+      </Button>
+        </Flex>
+        <Flex alignItems={"center"} justifyContent={"center"} cursor={"pointer"} onClick={handleAppleAuth}>
+        <Button backgroundColor={"#000"} _hover={{backgroundColor:"#121212"}} mx='2' color={"white"}>
+      <Image src='/apple.png' w={3} h={3} mr={2} alt='Apple logo' />
+        Apple
+      </Button>
+        </Flex>
+      </Flex>
     </Flex>
   );
 };
