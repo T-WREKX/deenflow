@@ -44,8 +44,9 @@ const App = () => {
 	});
 
   const [signInWithGoogle, , , error1] = useSignInWithGoogle(auth);
-  const [signInWithApple,  , ,error2 ] = useSignInWithApple(auth);
+
 	const showToast = useShowToast();
+  const loginUser = useAuthStore((state) => state.login);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowClick = () => setShowPassword(!showPassword);
@@ -95,38 +96,7 @@ const App = () => {
 		}
 	};
 
-  const handleAppleAuth = async () => {
-		try {
-			const newUser = await signInWithApple();
-			if (!newUser && error2) {
-				showToast("Error", error2.message, "error");
-				return;
-			}
-			const userRef = doc(firestore, "users", newUser.user.uid);
-			const userSnap = await getDoc(userRef);
 
-			if (userSnap.exists()) {
-				// login
-				const userDoc = userSnap.data();
-				localStorage.setItem("user-info", JSON.stringify(userDoc));
-				loginUser(userDoc);
-			} else {
-				// signup
-				const userDoc = {
-					uid: newUser.user.uid,
-					email: newUser.user.email,
-					username: newUser.user.email.split("@")[0],
-					createdAt: Date.now(),
-					premium:false
-				};
-				await setDoc(doc(firestore, "users", newUser.user.uid), userDoc);
-				localStorage.setItem("user-info", JSON.stringify(userDoc));
-				loginUser(userDoc);
-			}
-		} catch (error) {
-			showToast("Error", error.message, "error");
-		}
-	};
 
   useEffect(() => {
     user && router.push('/')
@@ -239,12 +209,6 @@ const App = () => {
         <Button backgroundColor={"#000"} _hover={{backgroundColor:"#121212"}} mx='2' color={"white"}>
       <Image src='/google.png' w={3} h={3} mr={2} alt='Google logo' />
         Google
-      </Button>
-        </Flex>
-        <Flex alignItems={"center"} justifyContent={"center"} cursor={"pointer"} onClick={handleAppleAuth}>
-        <Button backgroundColor={"#000"} _hover={{backgroundColor:"#121212"}} mx='2' color={"white"}>
-      <Image src='/apple.png' w={3} h={3} mr={2} alt='Apple logo' />
-        Apple
       </Button>
         </Flex>
       </Flex>
